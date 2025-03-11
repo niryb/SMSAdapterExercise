@@ -1,0 +1,66 @@
+@startuml
+package api {
+    class SMSException
+    interface SMSSender {
+        + sendSMS(SMS sms): boolean
+    }
+    class SMSSenderFactory {
+        + static getSender(String phoneNumber): SMSSender
+    }
+    class TimSMSAdapter {
+        + sendSMS(SMS sms): boolean
+    }
+    class VivoService {
+        + enviarSMS(String origem, String destino, LocalDateTime time, String[] msgs) throws SMSException
+    }
+    class VivoSMSAdapter {
+        + sendSMS(SMS sms): boolean
+    }
+}
+
+package main {
+    class AppSMSNotification
+}
+
+package model {
+    class SMS {
+        + String destino
+        + String origem
+        + String texto
+        + LocalDateTime timestamp
+    }
+}
+
+package service {
+    class FachadaSMS {
+        + static enviarMensagem(String origem, String destino, String texto)
+    }
+}
+
+package translation {
+    class Translator {
+        + static translate(String fromLang, String toLang, String text): String
+    }
+}
+
+
+SMSSender <|.. TimSMSAdapter
+SMSSender <|.. VivoSMSAdapter
+SMSSenderFactory ..|> SMSSender : "Retorna"
+SMSSenderFactory ..> TimSMSAdapter : "Cria"
+SMSSenderFactory ..> VivoSMSAdapter : "Cria"
+
+VivoSMSAdapter --> VivoService : "Usa"
+VivoService ..|> SMSException : "Lança"
+
+FachadaSMS ..> SMSSenderFactory : "Obtém remetente"
+FachadaSMS ..> SMS : "Cria SMS"
+FachadaSMS ..> SMSSender : "Usa para enviar SMS"
+
+AppSMSNotification ..> FachadaSMS : "Usa"
+AppSMSNotification ..> Translator : "Usa para tradução"
+
+Translator ..> Translator : "Chama API externa"
+SMS ..> LocalDateTime : "Usa para timestamp"
+SMS ..> DateTimeFormatter : "Formata timestamp"
+@enduml
