@@ -3,7 +3,6 @@
 
 package api;
 
-import java.time.format.DateTimeFormatter;
 import model.SMS;
 
 public class TimSMSAdapter implements SMSSender {
@@ -17,8 +16,7 @@ public class TimSMSAdapter implements SMSSender {
         }
 
         // Se a mensagem não estiver vazia, prossegue com o envio
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        System.out.println("Tim SMS - " + dtf.format(sms.getTimestamp()));
+        System.out.println("Tim SMS - " + sms.getTimestamp());
         System.out.println("-------------------");
         System.out.println("From: " + sms.getOrigem());
         System.out.println("To  : " + sms.getDestino());

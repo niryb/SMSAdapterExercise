@@ -3,13 +3,11 @@
 
 package api;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class VivoService {
 
-    public void enviarSMS(String origem, String destino, LocalDateTime time, String[] msgs) throws SMSException {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public void enviarSMS(String origem, String destino, String time, String[] msgs) throws SMSException {
 
         if (msgs.length == 0) {
             throw new SMSException("Mensagem vazia. Nao e possivel o envio");
@@ -24,7 +22,7 @@ public class VivoService {
         }
 
         System.out.println("Vivo SMS");
-        System.out.println("Enviado em " + dtf.format(time));
+        System.out.println("Enviado em " + time);
         System.out.println("-------------------");
         System.out.println("From: " + origem + " To " + destino);
         System.out.println("-------------------");

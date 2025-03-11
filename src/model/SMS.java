@@ -3,6 +3,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class SMS {
@@ -18,8 +19,9 @@ public class SMS {
         this.timestamp = LocalDateTime.now();
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public String getTimestamp() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        return timestamp.format(dtf);
     }
 
     public String getDestino() {
