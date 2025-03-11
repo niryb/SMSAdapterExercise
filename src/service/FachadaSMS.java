@@ -14,7 +14,6 @@ public class FachadaSMS {
 
         if (sucesso) {
             exibirInformacoesSMS(sms, getOperadora(destino));
-            System.out.println("Mensagem enviada com sucesso para o número da operadora " + destino.substring(0,2));
 
         }
         else {
